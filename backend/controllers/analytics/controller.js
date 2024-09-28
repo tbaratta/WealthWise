@@ -24,7 +24,7 @@ const getAnalytics = (req, res) => {
                budget_by_category: `SELECT SUM(budgeted_amount) AS total, category FROM Budgets WHERE user_id = ? GROUP BY category;`,
                budget_by_month: `SELECT SUM(budgeted_amount) AS total, strftime('%Y-%m', start_date) AS month FROM Budgets WHERE user_id = ? GROUP BY month;`,
                budget_vs_spent: `SELECT SUM(budgeted_amount) AS total_budget, SUM(spent_amount) AS total_spent FROM Budgets WHERE user_id = ?;`,
-               savings_goals: `SELECT goal_name, target_amount, SUM(current_amount) AS current_savings, julianday(deadline) - julianday('now') AS days_until_deadline FROM SavingsGoals WHERE user_id = ? GROUP BY goal_name;`,
+               savings_goals: `SELECT goal_name, target_amount, SUM(current_amount) AS current_savings, ROUND(julianday(deadline) - julianday('now')) AS days_until_deadline FROM SavingsGoals WHERE user_id = ? GROUP BY goal_name;`,
           };
 
           const analyticsData = {};
