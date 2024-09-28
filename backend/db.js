@@ -18,6 +18,7 @@ const initializeDatabase = () => {
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT NOT NULL,
                     email TEXT NOT NULL,
+                    password TEXT NOT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                )
           `);
@@ -26,7 +27,7 @@ const initializeDatabase = () => {
           db.run(`
                CREATE TABLE IF NOT EXISTS Transactions (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    user_id INTEGER,
+                    user_id INTEGER NOT NULL,
                     amount REAL NOT NULL,
                     category TEXT NOT NULL,
                     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
