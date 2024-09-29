@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     header: {
-        backgroundColor: 'orange',
+        backgroundColor: '#FF4500', // Match the orange color to the home screen
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         shadowRadius: 1,
     },
     headerSection: {
-        backgroundColor: 'orange',
+        backgroundColor: '#FF4500', // Match the orange color to the home screen
         padding: 10,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         paddingHorizontal: 10,
+        backgroundColor: 'white',
     },
     button: {
         backgroundColor: 'blue',

@@ -65,7 +65,6 @@ const HomeView = () => {
     }
   };
 
-
   const ChatBox = () => (
     <TouchableOpacity style={styles.chatBox} onPress={() => setIsChatExpanded(true)}>
       <Animated.View style={{ transform: [{ translateY: bounceAnimation }] }}>
@@ -98,8 +97,9 @@ const HomeView = () => {
           placeholderTextColor="#666"
           value={inputValue}
           onChangeText={setInputValue}
+          onSubmitEditing={sendMessage} // Send message on enter key press
         />
-        <Button title="Send" color="orange" onPress={sendMessage} />
+        <Button title="Send" color="#FF4500" onPress={sendMessage} />
       </View>
     </View>
   );
@@ -124,7 +124,7 @@ const HomeView = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#FF4500', // Classic orange background
     padding: 20,
   },
   hero: {
@@ -132,21 +132,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   aiHeader: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 30, // Increased font size for header
+    fontWeight: 'bold', // Bold for header
+    color: 'white', // White text color for header
   },
   aiSubHeader: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: 16, // Decreased font size for subheader
+    fontWeight: 'normal', // Unbolded subheader
+    color: 'white', // White text color for subheader
   },
   chatBox: {
-    backgroundColor: '#fff',
+    backgroundColor: 'white', // White background for chat box
     borderRadius: 10,
-    padding: 10,
+    padding: 20, // Increased padding for a bigger touchable area
     alignItems: 'center',
+    marginTop: 20, // Add some margin to separate from header
+    elevation: 5, // Added elevation for shadow effect
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
   chatBubble: {
-    backgroundColor: '#e1e1e1',
+    backgroundColor: '#e1e1e1', // Light gray for chat bubble
     borderRadius: 15,
     padding: 10,
   },
@@ -162,6 +170,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     padding: 20,
+    marginTop: 40, // Increase margin top for spacing
   },
   chatMessages: {
     flex: 1,
@@ -180,21 +189,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
-    padding: 10,
+    padding: 15, // Increased padding for better touch experience
     marginRight: 10,
+    height: 50, // Increased height for the input
   },
   userMessage: {
     alignSelf: 'flex-end',
     backgroundColor: '#a0e1a0',
     borderRadius: 5,
-    padding: 5,
+    padding: 10,
     marginVertical: 2,
   },
   aiMessage: {
     alignSelf: 'flex-start',
     backgroundColor: '#e1e1e1',
     borderRadius: 5,
-    padding: 5,
+    padding: 10,
     marginVertical: 2,
   },
   fullScreenOverlay: {
