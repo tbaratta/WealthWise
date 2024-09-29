@@ -9,20 +9,19 @@
 - 🤝🏻 [References](#references)
 
 ## 🤖 Introduction <a name="introduction"></a>
-This project leverages AI through the OpenAI API and Yahoo Finance API to deliver a personal financial advisor via an AI chatbot, helping clients manage their finances effectively. Additionally, it features a pie chart visualization for tracking monthly budgets based on user expenses and income, along with educational resources to enhance financial literacy.
+This mobile application leverages AI through the OpenAI API and Yahoo Finance API to deliver a personal financial advisor via an AI chatbot, helping clients manage their finances effectively. Additionally, it features a pie chart visualization for tracking monthly budgets based on user expenses and income, along with educational resources to enhance financial literacy.
 
 ## ⚙️ Tech Stack <a name="tech-stack"></a>
 
-- React.js
-- Redux ToolKit
-- Tailwind CSS
+- React Native
+- Node.js
 
 ## 🛠️ Features <a name="features"></a>
 
 - **Modern User Interface:** A visually appealing and fully functional user interface designed by [Javascriptmastery](https://www.youtube.com/@javascriptmastery).
-- **Summary Generation:** Allows users to input the URL of an article, which the web application summarizes using AI.
-- **History Saving:** Allows users to save their summaries locally for convenience.
-- **RTK Query API Request:** Leverages the Redux ToolKit (RTK) query for API requests.
+- **AI Chatbot:** Leverages AI to provide personalized advice through an interactive chatbox.
+- **Budget Visualization:** Integrates a pie chart and line graph that visually represents a users' monthly budget.
+- **Expense Tracking:** Automatically tracks
 
 ## 🏃‍♂️ Quick Start <a name="quick-start"></a>
 
