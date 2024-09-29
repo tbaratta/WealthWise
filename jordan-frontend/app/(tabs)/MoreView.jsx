@@ -45,11 +45,9 @@ const MoreView = () => {
 
     return (
         <ScrollView style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerText}>Fraud Detection</Text>
-            </View>
-
+            {/* Fraud Detection Section */}
             <View style={styles.section}>
+                <Text style={styles.sectionHeader}>Fraud Detection</Text>
                 <View style={styles.toggleContainer}>
                     <Text style={styles.toggleLabel}>Enable Fraud Detection</Text>
                     <Switch
@@ -60,19 +58,23 @@ const MoreView = () => {
                 </View>
             </View>
 
-            {/* New Dev Tools Header */}
-            <View style={styles.header}>
-                <Text style={styles.headerText}>Dev Tools</Text>
-            </View>
-
-            <TouchableOpacity style={styles.button} onPress={postFakeTransaction} accessibilityLabel="Post Fake Transaction">
-                <Text style={styles.buttonText}>Add Fake Transaction</Text>
-            </TouchableOpacity>
-
+            {/* Dev Tools Section */}
             <View style={styles.section}>
-                <Text>Latest Transaction</Text>
-                <Text>Amount: {latestTransaction.amount !== null ? `$${latestTransaction.amount}` : "Loading..."}</Text>
-                <Text>Category: {latestTransaction.category || "Loading..."}</Text>
+                <Text style={styles.sectionHeader}>Dev Tools</Text>
+
+                <TouchableOpacity style={styles.button} onPress={postFakeTransaction} accessibilityLabel="Post Fake Transaction">
+                    <Text style={styles.buttonText}>Add Fake Transaction</Text>
+                </TouchableOpacity>
+
+                <View style={styles.transactionInfo}>
+                    <Text style={styles.transactionLabel}>Latest Transaction:</Text>
+                    <Text style={styles.transactionDetails}>
+                        Amount: {latestTransaction.amount !== null ? `$${latestTransaction.amount}` : "Loading..."}
+                    </Text>
+                    <Text style={styles.transactionDetails}>
+                        Category: {latestTransaction.category || "Loading..."}
+                    </Text>
+                </View>
             </View>
         </ScrollView>
     );
@@ -83,42 +85,39 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
     },
-    header: {
-        backgroundColor: '#FF4500', // Match the orange color to the home screen
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    headerText: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 20,
-    },
     section: {
         marginVertical: 10,
         marginHorizontal: 16,
         padding: 16,
-        backgroundColor: 'lightgray',
+        backgroundColor: 'white',
         borderRadius: 10,
         elevation: 1,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.1,
         shadowRadius: 1,
+        borderColor: '#FF4500', // Orange border
+        borderWidth: 1,
+    },
+    sectionHeader: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#FF4500', // Orange color
+        marginBottom: 10,
     },
     toggleContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 10,
-        backgroundColor: 'white',
+        backgroundColor: '#f7f7f7', // Light gray background for the toggle
         borderRadius: 10,
     },
     toggleLabel: {
         fontSize: 18,
     },
     button: {
-        backgroundColor: 'blue',
+        backgroundColor: '#FF4500', // Orange button
         borderRadius: 8,
         padding: 10,
         alignItems: 'center',
@@ -128,6 +127,19 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         fontSize: 18,
+    },
+    transactionInfo: {
+        marginTop: 10,
+        padding: 10,
+        backgroundColor: '#f7f7f7', // Light gray background for transaction info
+        borderRadius: 10,
+    },
+    transactionLabel: {
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    transactionDetails: {
+        fontSize: 14,
     },
 });
 
