@@ -1,177 +1,154 @@
-import React, { useState } from 'react';
-import { View, Text, Button, TextInput, FlatList, StyleSheet, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, StyleSheet, Dimensions } from 'react-native';
+import { PieChart, LineChart } from 'react-native-chart-kit'; // Import chart components
+
+// Replace with your backend URL
+const backendUrl = 'http://10.0.2.2:3000'; // Replace with your actual local server IP
+const userId = '1'; // Replace with the actual user ID
 
 const AnalyticsView = () => {
-  const [showTransactions, setShowTransactions] = useState(false);
-  const [newGoalName, setNewGoalName] = useState('');
-  const [newGoalTargetAmount, setNewGoalTargetAmount] = useState('');
+     const [analyticsData, setAnalyticsData] = useState(null);
+     const [loading, setLoading] = useState(true);
 
-  const [spendingTransactions, setSpendingTransactions] = useState([
-    { id: '1', name: 'Groceries', amount: 50 },
-    { id: '2', name: 'Utilities', amount: 75 },
-    { id: '3', name: 'Rent', amount: 1200 },
-    { id: '4', name: 'Entertainment', amount: 100 },
-  ]);
+     // Predefined colors for pie chart segments
+     const staticColors = [
+          '#FF6384', // Red
+          '#36A2EB', // Blue
+          '#FFCE56', // Yellow
+          '#4BC0C0', // Cyan
+          '#9966FF', // Purple
+          '#FF9F40', // Orange
+          '#FF5733', // Dark Red
+          '#C70039', // Crimson
+          '#900C3F', // Maroon
+          '#581845', // Dark Purple
+     ];
 
-  const [savingsGoals, setSavingsGoals] = useState([
-    { id: '1', name: 'Emergency Fund', targetAmount: 5000, currentAmount: 2000 },
-    { id: '2', name: 'Vacation', targetAmount: 3000, currentAmount: 1500 },
-  ]);
+     // Function to fetch analytics data from the backend
+     const fetchData = async () => {
+          try {
+               const response = await fetch(`${backendUrl}/analytics/${userId}`);
+               const data = await response.json();
+               // console.log('Fetched Data:', data); // Debug: Check if backend data is correct
+               setAnalyticsData(data);
+               setLoading(false);
+          } catch (error) {
+               console.error('Error fetching analytics data:', error);
+               setLoading(false);
+          }
+     };
 
-  const addGoal = () => {
-    if (newGoalName && !isNaN(newGoalTargetAmount) && newGoalTargetAmount !== '') {
-      const newGoal = {
-        id: Math.random().toString(),
-        name: newGoalName,
-        targetAmount: parseFloat(newGoalTargetAmount),
-        currentAmount: 0,
-      };
-      setSavingsGoals([...savingsGoals, newGoal]);
-      setNewGoalName('');
-      setNewGoalTargetAmount('');
-    }
-  };
+     // UseEffect to set up polling to refresh data every 10 seconds
+     useEffect(() => {
+          fetchData(); // Initial fetch
 
-  const removeGoal = (id) => {
-    setSavingsGoals(savingsGoals.filter(goal => goal.id !== id));
-  };
+          const intervalId = setInterval(() => {
+               fetchData(); // Fetch updated data every 10 seconds
+          }, 1000);
 
-  const toggleTransactions = () => {
-    setShowTransactions(prevState => !prevState);
-  };
+          // Cleanup the interval when the component unmounts
+          return () => clearInterval(intervalId);
+     }, []);
 
-  return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Analytics</Text>
-      </View>
+     if (loading) {
+          return <Text>Loading data...</Text>;
+     }
 
-      {/* Spending Section */}
-      <View style={styles.section}>
-        <Text style={styles.sectionHeader}>Spending</Text>
-        <View style={styles.chartPlaceholder}>
-          <Text style={styles.chartText}>📊 Spending Pie Chart Placeholder</Text>
-        </View>
-        <Button title={showTransactions ? "Hide Transactions" : "Show Recent Transactions"} onPress={toggleTransactions} />
-        {showTransactions && (
-          <FlatList
-            data={spendingTransactions}
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => (
-              <View style={styles.transactionItem}>
-                <Text>{item.name}</Text>
-                <Text>${item.amount.toFixed(2)}</Text>
-              </View>
-            )}
-          />
-        )}
-      </View>
+     if (!analyticsData) {
+          return <Text>No data available</Text>;
+     }
 
-      {/* Saving Section */}
-      <View style={styles.section}>
-        <Text style={styles.sectionHeader}>Saving</Text>
-        <View style={styles.chartPlaceholder}>
-          <Text style={styles.chartText}>📊 Saving Goal Chart Placeholder</Text>
-        </View>
-        <FlatList
-          data={savingsGoals}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.goalItem}>
-              <Text>{item.name}</Text>
-              <Text>Target: ${item.targetAmount}</Text>
-              <Button title="Remove" onPress={() => removeGoal(item.id)} />
-            </View>
-          )}
-        />
-        <View style={styles.addGoalContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Goal Name"
-            value={newGoalName}
-            onChangeText={setNewGoalName}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Target Amount"
-            value={newGoalTargetAmount}
-            onChangeText={setNewGoalTargetAmount}
-            keyboardType="numeric"
-          />
-          <Button title="Add" onPress={addGoal} />
-        </View>
-      </View>
-    </ScrollView>
-  );
+     // Debug: log the data to verify structure
+     // console.log('Analytics Data:', analyticsData);
+
+     // Prepare data for PieChart (Spending Categories) with static colors
+     const spendingCategoriesData = analyticsData?.transactions_by_category?.map((item, index) => ({
+          name: item.category,
+          amount: item.total,
+          color: staticColors[index % staticColors.length], // Use static colors in a loop
+          legendFontColor: '#7F7F7F',
+          legendFontSize: 15,
+     }));
+
+     // Prepare data for LineChart (Spending Over Time)
+     const spendingOverTimeData = analyticsData?.spending_over_time; // Assume this is in the format [{ month: 'Jan', total: 100 }, ...]
+     const lineData = {
+          labels: spendingOverTimeData?.map(item => item.month) || [], // Extract months
+          datasets: [
+               {
+                    data: spendingOverTimeData?.map(item => item.total) || [], // Extract total spending
+                    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`, // Line color
+                    strokeWidth: 2, // Line thickness
+               },
+          ],
+     };
+
+     // Check for data validity before rendering
+     const hasSpendingData = spendingCategoriesData && spendingCategoriesData.length > 0;
+     const hasSpendingOverTimeData = spendingOverTimeData && spendingOverTimeData.length > 0;
+
+     return (
+          <ScrollView style={styles.container}>
+               <View style={styles.section}>
+                    <Text style={styles.header}>Spending by Category</Text>
+                    {hasSpendingData ? (
+                         <PieChart
+                              data={spendingCategoriesData}
+                              width={Dimensions.get('window').width - 30} // Adjust for screen size
+                              height={220}
+                              chartConfig={chartConfig}
+                              accessor="amount"
+                              backgroundColor="transparent"
+                              paddingLeft="15"
+                              absolute
+                         />
+                    ) : (
+                         <Text>No spending data available</Text>
+                    )}
+               </View>
+
+               <View style={styles.section}>
+                    <Text style={styles.header}>Spending Over Time</Text>
+                    {hasSpendingOverTimeData ? (
+                         <LineChart
+                              data={lineData}
+                              width={Dimensions.get('window').width - 30}
+                              height={220}
+                              chartConfig={chartConfig}
+                              fromZero
+                         />
+                    ) : (
+                         <Text>No spending over time data available</Text>
+                    )}
+               </View>
+          </ScrollView>
+     );
+};
+
+// Chart config for styling
+const chartConfig = {
+     backgroundGradientFrom: '#1E2923',
+     backgroundGradientTo: '#08130D',
+     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+     labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+     strokeWidth: 2,
+     barPercentage: 0.5,
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  header: {
-    backgroundColor: '#FFA500', // Orange color
-    padding: 16,
-  },
-  headerText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  section: {
-    padding: 16,
-    backgroundColor: '#f7f7f7',
-    borderRadius: 10,
-    marginBottom: 20,
-  },
-  sectionHeader: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  chartPlaceholder: {
-    height: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#e0e0e0',
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-  chartText: {
-    fontSize: 24,
-  },
-  transactionItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  goalItem: {
-    padding: 10,
-    marginBottom: 10,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
-    elevation: 2,
-  },
-  addGoalContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  input: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 8,
-    marginRight: 8,
-  },
+     container: {
+          flex: 1,
+          backgroundColor: '#fff',
+     },
+     header: {
+          fontSize: 20,
+          fontWeight: 'bold',
+          marginBottom: 10,
+     },
+     section: {
+          padding: 16,
+          marginBottom: 20,
+     },
 });
 
 export default AnalyticsView;

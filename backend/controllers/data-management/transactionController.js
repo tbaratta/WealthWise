@@ -25,17 +25,19 @@ const postTransactions = (req, res) => {
 
                const userLocation = user.location; // Store user location
 
-               // Fraud detection checks
-               if (userLocation !== req.body.location && amount > 1500) {
-                    return res.status(409).json({ message: 'High Amount & Different Location Detected: Possible Fraud Detected', transaction: { amount, category, location: req.body.location } });
+               let badMessage = "";
+               // Check for potential fraud
+               if (user.location !== location && amount > 1500) {
+                    badMessage = 'High Amount & Different Location Detected: Possible Fraud Detected';
                }
 
-               if (userLocation !== req.body.location) {
-                    return res.status(409).json({ message: 'Different Location Detected: Possible Fraud Detected', transaction: { amount, category, location: req.body.location } });
+               // Check for potential fraud
+               if (user.location !== location) {
+                    badMessage = 'Different Location Detected: Possible Fraud Detected';
                }
 
                if (amount > 1500) {
-                    return res.status(409).json({ message: 'High Amount Detected: Possible Fraud Detected', transaction: { amount, category, location: req.body.location } });
+                    badMessage = 'High Amount Detected: Possible Fraud Detected';
                }
 
                // Insert the transaction if no fraud is detected

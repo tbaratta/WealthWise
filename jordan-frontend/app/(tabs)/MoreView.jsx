@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Switch, StyleSheet, ScrollView, Alert } from 'react-native';
 import axios from 'axios';
-const frontendIp = '10.0.2.2:3000';
+
+const frontendIp = '10.0.2.2:3000'; // Make sure this matches your backend URL
 const userId = '1';
 
 const MoreView = () => {
@@ -27,7 +28,7 @@ const MoreView = () => {
     // Fetch the latest transaction from the backend
     const fetchLatestTransaction = async () => {
         try {
-            const response = await axios.get(`http://${frontendIp}/more`); // Frontend URL
+            const response = await axios.get(`http://${frontendIp}/more`); // Ensure this is correct
             setLatestTransaction(response.data);
         } catch (error) {
             console.error('Error fetching latest transaction:', error);
@@ -37,15 +38,24 @@ const MoreView = () => {
 
     // Post a fake transaction to the backend
     const postFakeTransaction = async () => {
+        const fakeTransaction = {
+            userId: userId, // Include user ID
+            amount: Math.floor(Math.random() * 100), // Random amount for the transaction
+            category: 'Food', // Example category
+            date: new Date().toISOString(), // Current date
+        };
+
         try {
-            await axios.post(`http://${frontendIp}/more/${userId}`); // Frontend URL
+            const response = await axios.post(`http://${frontendIp}/more/${userId}`, fakeTransaction);
+            console.log('Posted Fake Transaction:', response.data);
             fetchLatestTransaction(); // Refresh the latest transaction after posting
             Alert.alert('Success', 'Fake transaction added successfully');
         } catch (error) {
-            console.error('Error posting fake transaction:', error);
+            console.error('Error posting fake transaction:', error.response?.data || error);
             Alert.alert('Error', 'Failed to add fake transaction');
         }
     };
+
 
     return (
         <ScrollView style={styles.container}>

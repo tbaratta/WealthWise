@@ -16,7 +16,7 @@ let latestTransaction = { amount: null, category: null, location: null };
 
 const chooseRandomTransaction = () => {
     let amount = Math.round(((Math.random() * 2000) + Math.random()) * 100) / 100;
-    let categories = ["Entertainment", "Finance", "Health", "Technology", "Travel"];
+    let categories = ["Groceries, Entertainment", "Finance", "Health", "Technology", "Travel"];
     let stores = ["Amazon", "Best Buy", "Starbucks", "Walmart", "Target"];
     let locations = ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix"];
 
@@ -38,37 +38,41 @@ const postFakeTransaction = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
+        console.log('User Location:', user.location); // Log user location
+        console.log('Transaction Location:', location); // Log transaction location
+
         // Insert the new transaction
         await dbRun(
             `INSERT INTO Transactions (user_id, amount, category, location) VALUES (?, ?, ?, ?)`,
             [id, amount, category, location]
         );
 
+        let badMessage = "";
         // Check for potential fraud
         if (user.location !== location && amount > 1500) {
-            return res.status(409).json({ message: 'High Amount & Different Location Detected: Possible Fraud Detected', transaction: { amount, category, location } });
-        }
-
-        // Check for potential fraud
-        if (user.location !== location) {
-            return res.status(409).json({ message: 'Different Location Detected: Possible Fraud Detected', transaction: { amount, category, location } });
-        }
-
-        if (amount > 1500) {
-            return res.status(409).json({ message: 'High Amount Detected: Possible Fraud Detected', transaction: { amount, category, location } });
+            badMessage = 'High Amount & Different Location Detected: Possible Fraud Detected';
+        } else if (user.location !== location) {
+            badMessage = 'Different Location Detected: Possible Fraud Detected';
+        } else if (amount > 1500) {
+            badMessage = 'High Amount Detected: Possible Fraud Detected';
         }
 
         // Store the latest transaction
         latestTransaction = { amount, category, location };
 
         // Send success response
-        return res.status(201).json({ message: 'Transaction added successfully', transaction: latestTransaction });
+        return res.status(201).json({
+            message: 'Transaction added successfully',
+            fraud_detection: badMessage || 'No fraud detected',
+            transaction: latestTransaction
+        });
 
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ error: err.message });
     }
 };
+
 
 const getFakeTransaction = (req, res) => {
     try {
