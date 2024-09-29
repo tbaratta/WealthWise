@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Switch, StyleSheet, ScrollView, Alert } from 'react-native';
 import axios from 'axios';
+
 const frontendIp = '10.0.2.2:3000';
 const userId = '1';
 
 const MoreView = () => {
-    const [fraudDetectionEnabled, setFraudDetectionEnabled] = useState(false);
-    const [developerToolsVisible, setDeveloperToolsVisible] = useState(false);
+    const [fraudDetectionEnabled, setFraudDetectionEnabled] = useState(true); // Default to on
     const [latestTransaction, setLatestTransaction] = useState({ amount: null, category: null });
 
     // Fetch the latest transaction when the component mounts
@@ -18,10 +18,6 @@ const MoreView = () => {
         const newValue = !fraudDetectionEnabled;
         setFraudDetectionEnabled(newValue);
         Alert.alert(`Fraud Detection is now ${newValue ? "enabled" : "disabled"}`);
-    };
-
-    const toggleDeveloperTools = () => {
-        setDeveloperToolsVisible(previousState => !previousState);
     };
 
     // Fetch the latest transaction from the backend
@@ -50,11 +46,10 @@ const MoreView = () => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.headerText}>More</Text>
+                <Text style={styles.headerText}>Fraud Detection</Text>
             </View>
 
             <View style={styles.section}>
-                {headerView("Fraud Detection")}
                 <View style={styles.toggleContainer}>
                     <Text style={styles.toggleLabel}>Enable Fraud Detection</Text>
                     <Switch
@@ -65,42 +60,23 @@ const MoreView = () => {
                 </View>
             </View>
 
-            <View style={styles.section}>
-                {headerView("Latest Transaction")}
-                <Text>Amount: {latestTransaction.amount !== null ? `$${latestTransaction.amount}` : "Loading..."}</Text>
-                <Text>Category: {latestTransaction.category || "Loading..."}</Text>
-                <TouchableOpacity style={styles.button} onPress={postFakeTransaction} accessibilityLabel="Post Fake Transaction">
-                    <Text style={styles.buttonText}>Add Fake Transaction</Text>
-                </TouchableOpacity>
+            {/* New Dev Tools Header */}
+            <View style={styles.header}>
+                <Text style={styles.headerText}>Dev Tools</Text>
             </View>
 
+            <TouchableOpacity style={styles.button} onPress={postFakeTransaction} accessibilityLabel="Post Fake Transaction">
+                <Text style={styles.buttonText}>Add Fake Transaction</Text>
+            </TouchableOpacity>
+
             <View style={styles.section}>
-                {headerView("Developer Tools")}
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={toggleDeveloperTools}
-                    accessibilityLabel="Toggle Developer Tools"
-                >
-                    <Text style={styles.buttonText}>
-                        {developerToolsVisible ? "Hide Developer Tools" : "Show Developer Tools"}
-                    </Text>
-                </TouchableOpacity>
-                {developerToolsVisible && (
-                    <View style={styles.developerTools}>
-                        <Text>Developer Tool 1</Text>
-                        <Text>Developer Tool 2</Text>
-                    </View>
-                )}
+                <Text>Latest Transaction</Text>
+                <Text>Amount: {latestTransaction.amount !== null ? `$${latestTransaction.amount}` : "Loading..."}</Text>
+                <Text>Category: {latestTransaction.category || "Loading..."}</Text>
             </View>
         </ScrollView>
     );
 };
-
-const headerView = (title) => (
-    <View style={styles.headerSection}>
-        <Text style={styles.headerSectionText}>{title}</Text>
-    </View>
-);
 
 const styles = StyleSheet.create({
     container: {
@@ -108,7 +84,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     header: {
-        backgroundColor: 'orange',
+        backgroundColor: '#FF4500', // Match the orange color to the home screen
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
@@ -152,23 +128,6 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         fontSize: 18,
-    },
-    developerTools: {
-        marginTop: 10,
-        padding: 10,
-        backgroundColor: 'white',
-        borderRadius: 10,
-    },
-    headerSection: {
-        backgroundColor: 'orange',
-        padding: 10,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-    },
-    headerSectionText: {
-        color: 'white',
-        fontSize: 20,
-        fontWeight: 'bold',
     },
 });
 
