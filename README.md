@@ -7,7 +7,6 @@
 - ⚙️ [Tech Stack](#tech-stack)
 - 🛠️ [Features](#features)
 - 🏃‍♂️ [Quick Start](#quick-start)
-- 🤝🏻 [References](#references)
 
 ## 🤖 Introduction <a name="introduction"></a>
 This mobile application leverages AI through the OpenAI API and Yahoo Finance API to deliver a personal financial advisor via an AI chatbot, helping clients manage their finances effectively. Additionally, it features a pie chart visualization for tracking monthly budgets based on user expenses and income, along with educational resources to enhance financial literacy.
