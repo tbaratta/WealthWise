@@ -1,4 +1,4 @@
-# WealthWise AI
+# 💲 WealthWise AI
 
 ## 🗒️ Table of Contents
 
@@ -13,16 +13,22 @@ This mobile application leverages AI through the OpenAI API and Yahoo Finance AP
 
 ## ⚙️ Tech Stack <a name="tech-stack"></a>
 
+- JavaScript
+- TypeScript
 - React Native
 - Expo
 - Node.js
-
+- Express.js
+- React.js
+- Sqlite
+  
+  
 ## 🛠️ Features <a name="features"></a>
 
 - **Modern User Interface:** A visually appealing and fully functional user interface designed.
 - **AI Chatbot:** Leverages AI to provide personalized advice through an interactive chatbox.
 - **Budget Visualization:** Integrates a pie chart and line graph that visually represents a users' monthly budget.
-- **Expense Tracking:** Automatically tracks
+- **Expense Tracking:** Automatically tracks expenses and income to provide better financial management.
 
 ## 🏃‍♂️ Quick Start <a name="quick-start"></a>
 
