@@ -6,5 +6,6 @@ const controller = require('../controllers/learning/controller');
 // Route to get analytics data
 router.get('/', controller.getLearning);
 router.get('/:id', controller.getLearningById);
+router.post('/chatbot', controller.postChatbot);
 
 module.exports = router;
