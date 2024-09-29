@@ -19,6 +19,7 @@ const initializeDatabase = () => {
                     name TEXT NOT NULL,
                     email TEXT NOT NULL,
                     password TEXT NOT NULL,
+                    location TEXT NOT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                )
           `);
@@ -30,6 +31,7 @@ const initializeDatabase = () => {
                     user_id INTEGER NOT NULL,
                     amount REAL NOT NULL,
                     category TEXT NOT NULL,
+                    location TEXT NOT NULL,
                     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     description TEXT,
                     FOREIGN KEY (user_id) REFERENCES Users(user_id)
@@ -72,17 +74,6 @@ const initializeDatabase = () => {
                     target_amount REAL NOT NULL,
                     current_amount REAL DEFAULT 0,
                     deadline TIMESTAMP,
-                    FOREIGN KEY (user_id) REFERENCES Users(user_id)
-               )
-          `);
-
-          // Create EngagementMetrics table
-          db.run(`
-               CREATE TABLE IF NOT EXISTS EngagementMetrics (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    user_id INTEGER,
-                    page_visits INTEGER DEFAULT 0,
-                    chatbot_interactions INTEGER DEFAULT 0,
                     FOREIGN KEY (user_id) REFERENCES Users(user_id)
                )
           `);
