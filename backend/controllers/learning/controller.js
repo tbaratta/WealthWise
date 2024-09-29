@@ -1,5 +1,4 @@
 const sqlite3 = require('sqlite3').verbose();
-const axios = require('axios');
 
 // Open the database connection
 const db = new sqlite3.Database('./wealthwise.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
@@ -56,7 +55,7 @@ const postChatbot = async (req, res) => {
                messages: [
                     {
                          role: 'user',
-                         content: userMessage + "Maximum 50 words, minimum 10 words, give good information and go in detail", // Use the user's message dynamically
+                         content: userMessage, // Use the user's message dynamically
                     },
                ],
                stock: stockSymbol, // Use the stock symbol dynamically
@@ -91,5 +90,5 @@ process.on('SIGINT', () => {
 module.exports = {
      getLearning,
      getLearningById,
-     postChatbot, 
+     postChatbot,
 };
