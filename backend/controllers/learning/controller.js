@@ -56,7 +56,7 @@ const postChatbot = async (req, res) => {
                messages: [
                     {
                          role: 'user',
-                         content: userMessage, // Use the user's message dynamically
+                         content: userMessage + "Maximum 50 words, minimum 10 words, give good information and go in detail", // Use the user's message dynamically
                     },
                ],
                stock: stockSymbol, // Use the stock symbol dynamically
