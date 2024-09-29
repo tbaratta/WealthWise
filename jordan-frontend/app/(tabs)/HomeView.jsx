@@ -43,7 +43,9 @@ const HomeView = () => {
   const ChatBox = () => (
     <TouchableOpacity style={styles.chatBox} onPress={() => setIsChatExpanded(true)}>
       <Animated.View style={{ transform: [{ translateY: bounceAnimation }] }}>
-        <Text style={styles.chatEmoji}>💬</Text>
+        <View style={styles.chatBubble}>
+          <Text style={styles.chatEmoji}>💬</Text>
+        </View>
         <Text style={styles.chatText}>Ask me a question...</Text>
       </Animated.View>
     </TouchableOpacity>
@@ -52,11 +54,15 @@ const HomeView = () => {
   const FullScreenChatView = () => (
     <View style={styles.fullScreenChatView}>
       <ScrollView style={styles.chatMessages}>
-        {messages.map((msg, index) => (
-          <Text key={index} style={msg.sender === 'User' ? styles.userMessage : styles.aiMessage}>
-            {msg.sender}: {msg.text}
-          </Text>
-        ))}
+        {messages.length === 0 ? (
+          <Text style={styles.noMessagesText}>No messages yet. Start chatting!</Text>
+        ) : (
+          messages.map((msg, index) => (
+            <Text key={index} style={msg.sender === 'User' ? styles.userMessage : styles.aiMessage}>
+              {msg.sender}: {msg.text}
+            </Text>
+          ))
+        )}
       </ScrollView>
 
       <View style={styles.messageInputContainer}>
@@ -74,11 +80,10 @@ const HomeView = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>WealthWise AI</Text>
-        <Text style={styles.subtitle}>Your personal financial advisor</Text>
+      <View style={styles.hero}>
+        <Text style={styles.aiHeader}>WealthWise AI</Text>
+        <Text style={styles.aiSubHeader}>Your Personal Financial Advisor</Text>
       </View>
-
       {!isChatExpanded ? (
         <ChatBox />
       ) : (
@@ -97,39 +102,53 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  header: {
+  hero: {
     alignItems: 'center',
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 53,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  subtitle: {
-    fontSize: 20,
-    color: 'white',
-  },
-  chatBox: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 20,
-  },
-  chatEmoji: {
-    fontSize: 50,
-    padding: 10,
+    marginBottom: 20, // Space between hero section and chat box
+    padding: 20,
     backgroundColor: 'white',
-    borderRadius: 15,
+    borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
     elevation: 5,
   },
+  aiHeader: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  aiSubHeader: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#666',
+  },
+  chatBox: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 20,
+  },
+  chatBubble: {
+    padding: 15,
+    backgroundColor: 'white',
+    borderRadius: 20, // Rounded corners for the white box
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+  chatEmoji: {
+    fontSize: 50,
+  },
   chatText: {
     fontSize: 12,
     color: 'white',
     marginTop: 10,
+    textAlign: 'center', // Center text under the emoji
   },
   fullScreenOverlay: {
     position: 'absolute',
@@ -147,9 +166,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 20,
+    justifyContent: 'flex-end', // Aligns the input area at the bottom
   },
   chatMessages: {
     flex: 1,
+  },
+  noMessagesText: {
+    textAlign: 'center',
+    marginVertical: 20,
+    color: '#999',
   },
   messageInputContainer: {
     flexDirection: 'row',

@@ -15,8 +15,6 @@ const LearnView = () => {
                 return ["Insurance 101 Video", "Insurance Knowledge Test", "Types of Insurance"];
             case "Loans":
                 return ["Understanding Loans Video", "Loan Application Test", "Loan Repayment Tips"];
-            case "Savings":
-                return ["Savings Strategies Video", "Savings Challenge Test", "How to Save Effectively"];
             default:
                 return [];
         }
@@ -100,7 +98,6 @@ const LearnView = () => {
                 {moduleView("Credit")}
                 {moduleView("Insurance")}
                 {moduleView("Loans")}
-                {moduleView("Savings")}
                 {chatbotModule()}
             </ScrollView>
         </View>
@@ -111,17 +108,17 @@ const LearnView = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: 'white', // Changed to white
         padding: 20,
     },
     header: {
-        backgroundColor: '#6200ee',
+        backgroundColor: 'orange', // Changed header to orange
         padding: 15,
         borderRadius: 8,
         marginBottom: 15,
     },
     headerText: {
-        color: '#ffffff',
+        color: 'white', // Changed header text color to white
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
@@ -145,17 +142,17 @@ const styles = StyleSheet.create({
     },
     moduleButton: {
         padding: 15,
-        backgroundColor: '#6200ee',
+        backgroundColor: 'orange', // Changed module button color to orange
     },
     moduleButtonText: {
-        color: '#ffffff',
+        color: 'white', // Changed module button text color to white
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
     },
     linksContainer: {
         padding: 10,
-        backgroundColor: '#e1bee7',
+        backgroundColor: '#f0f0f0',
     },
     linkText: {
         fontSize: 16,
@@ -169,30 +166,30 @@ const styles = StyleSheet.create({
     },
     chatButton: {
         padding: 10,
-        backgroundColor: '#6200ee',
+        backgroundColor: 'orange', // Changed chat button color to orange
         borderRadius: 8,
         alignItems: 'center',
     },
     chatButtonText: {
-        color: '#ffffff',
+        color: 'white', // Changed chat button text color to white
         fontSize: 18,
     },
     fullChatContainer: {
         borderWidth: 1,
-        borderColor: '#6200ee',
+        borderColor: 'orange', // Changed border color to orange
         borderRadius: 8,
         overflow: 'hidden',
         backgroundColor: '#ffffff',
         width: '100%',
-        height: '50%',
+        height: '70%', // Increased height for larger chatbot view
         justifyContent: 'space-between',
     },
     chatHeader: {
-        backgroundColor: '#6200ee',
+        backgroundColor: 'orange', // Changed chat header color to orange
         padding: 10,
     },
     chatHeaderText: {
-        color: '#ffffff',
+        color: 'white', // Changed chat header text color to white
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
@@ -225,14 +222,15 @@ const styles = StyleSheet.create({
         marginRight: 5,
     },
     sendButton: {
-        backgroundColor: '#6200ee',
+        backgroundColor: 'orange', // Changed send button color to orange
         borderRadius: 5,
         padding: 10,
     },
     sendButtonText: {
-        color: '#ffffff',
+        color: 'white', // Changed send button text color to white
         fontWeight: 'bold',
     },
 });
 
 export default LearnView;
+
