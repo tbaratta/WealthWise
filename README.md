@@ -41,7 +41,7 @@ Before you begin, make sure to install the following:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/tbaratta/AI_Summarizer.git
+    [git clone https://github.com/tbaratta/AI_Summarizer.git](https://github.com/tbaratta/WealthWise_AI.git)
     ```
 
 2. Navigate to the project directory:
@@ -54,19 +54,18 @@ Before you begin, make sure to install the following:
    ```bash
     npm install
     ```
-4. Create a new file named .env in the root of your project and add the following:
+4. Install Expo:
    ```bash
-    VITE_RAPID_API_ARTICLE_KEY=
+    npm install expo
     ```
-   Visit [Rapid API Website](https://rapidapi.com/restyler/api/article-extractor-and-summarizer?utm_source=youtube.com%2FJavaScriptMastery&utm_medium=referral&utm_campaign=DevRel) to replace the placeholder value.
-
-5. Run the Project
+5. Load the emulator:
    ```bash
-    npm run dev
+    npx expo start
     ```
-   Open http://localhost:5173 in your browser to view the project.
-
+6. Click Expo Go app
+   
    ## 🤝🏻 References <a name="references"></a>
 
    - [JavaScriptMastery](https://www.youtube.com/@javascriptmastery)
+     
    
