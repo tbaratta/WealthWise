@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Switch, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Switch, StyleSheet, ScrollView, Alert } from 'react-native';
 
 const MoreView = () => {
-    const [fraudDetectionEnabled, setFraudDetectionEnabled] = useState(false); // Toggle state for fraud detection
-    const [developerToolsVisible, setDeveloperToolsVisible] = useState(false); // Toggle state for developer tools visibility
+    const [fraudDetectionEnabled, setFraudDetectionEnabled] = useState(false);
+    const [developerToolsVisible, setDeveloperToolsVisible] = useState(false);
 
     const toggleFraudDetection = () => {
-        setFraudDetectionEnabled(previousState => !previousState);
+        const newValue = !fraudDetectionEnabled;
+        setFraudDetectionEnabled(newValue);
+        Alert.alert(`Fraud Detection is now ${newValue ? "enabled" : "disabled"}`);
     };
 
     const toggleDeveloperTools = () => {
@@ -15,12 +17,10 @@ const MoreView = () => {
 
     return (
         <ScrollView style={styles.container}>
-            {/* Orange strip at the top */}
             <View style={styles.header}>
                 <Text style={styles.headerText}>More</Text>
             </View>
 
-            {/* Fraud Detection Section */}
             <View style={styles.section}>
                 {headerView("Fraud Detection")}
                 <View style={styles.toggleContainer}>
@@ -28,16 +28,17 @@ const MoreView = () => {
                     <Switch
                         onValueChange={toggleFraudDetection}
                         value={fraudDetectionEnabled}
+                        accessibilityLabel="Enable Fraud Detection Switch"
                     />
                 </View>
             </View>
 
-            {/* Developer Tools Section */}
             <View style={styles.section}>
                 {headerView("Developer Tools")}
                 <TouchableOpacity
                     style={styles.button}
                     onPress={toggleDeveloperTools}
+                    accessibilityLabel="Toggle Developer Tools"
                 >
                     <Text style={styles.buttonText}>
                         {developerToolsVisible ? "Hide Developer Tools" : "Show Developer Tools"}
@@ -45,7 +46,6 @@ const MoreView = () => {
                 </TouchableOpacity>
                 {developerToolsVisible && (
                     <View style={styles.developerTools}>
-                        {/* Developer Tools Content Goes Here */}
                         <Text>Developer Tool 1</Text>
                         <Text>Developer Tool 2</Text>
                     </View>
@@ -55,7 +55,6 @@ const MoreView = () => {
     );
 };
 
-// Custom Header View
 const headerView = (title) => (
     <View style={styles.headerSection}>
         <Text style={styles.headerSectionText}>{title}</Text>
@@ -84,8 +83,8 @@ const styles = StyleSheet.create({
         padding: 16,
         backgroundColor: 'lightgray',
         borderRadius: 10,
-        elevation: 1, // For Android shadow
-        shadowColor: '#000', // For iOS shadow
+        elevation: 1,
+        shadowColor: '#000',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.1,
         shadowRadius: 1,

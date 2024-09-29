@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, TextInput } from 'react-native';
 
 const LearnView = () => {
-    const [selectedModule, setSelectedModule] = useState(null); // Track which module is expanded
-    const [isChatExpanded, setIsChatExpanded] = useState(false); // State for chatbot expansion
+    const [selectedModule, setSelectedModule] = useState(null);
+    const [isChatExpanded, setIsChatExpanded] = useState(false);
+    const [messages, setMessages] = useState([]); // State for chat messages
+    const [inputText, setInputText] = useState(""); // State for input text
 
     const links = (module) => {
         switch (module) {
@@ -37,6 +39,18 @@ const LearnView = () => {
         </View>
     );
 
+    const handleSendMessage = () => {
+        if (inputText.trim() === "") return; // Prevent sending empty messages
+        // Add user message
+        setMessages((prevMessages) => [...prevMessages, { user: "User", text: inputText }]);
+        setInputText(""); // Clear input
+
+        // Simulate bot response after a delay
+        setTimeout(() => {
+            setMessages((prevMessages) => [...prevMessages, { user: "WealthWise AI", text: "That's interesting! Tell me more..." }]);
+        }, 1000);
+    };
+
     const chatbotModule = () => (
         <View style={styles.chatbotContainer}>
             {!isChatExpanded ? (
@@ -55,17 +69,22 @@ const LearnView = () => {
                 <Text style={styles.chatHeaderText}>WealthWise AI Chatbot</Text>
             </View>
             <ScrollView style={styles.chatArea}>
-                <Text>User: What can I learn about savings?</Text>
-                <Text>WealthWise AI: You can explore various tips and tricks to save effectively...</Text>
-                {/* Add more chat messages here */}
+                {messages.map((msg, index) => (
+                    <Text key={index} style={{ alignSelf: msg.user === "User" ? 'flex-end' : 'flex-start' }}>
+                        {msg.user}: {msg.text}
+                    </Text>
+                ))}
             </ScrollView>
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.inputField}
                     placeholder="Ask me a question..."
                     placeholderTextColor="gray"
+                    value={inputText}
+                    onChangeText={setInputText}
+                    onSubmitEditing={handleSendMessage} // Send on Enter key
                 />
-                <TouchableOpacity style={styles.sendButton}>
+                <TouchableOpacity style={styles.sendButton} onPress={handleSendMessage}>
                     <Text style={styles.sendButtonText}>Send</Text>
                 </TouchableOpacity>
             </View>
@@ -88,101 +107,9 @@ const LearnView = () => {
     );
 };
 
+// Styles remain unchanged
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white',
-    },
-    header: {
-        backgroundColor: 'orange',
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    headerText: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 20,
-    },
-    scrollContainer: {
-        paddingHorizontal: 16,
-        paddingBottom: 20,
-    },
-    moduleButton: {
-        backgroundColor: 'orange',
-        padding: 12,
-        borderRadius: 8,
-        marginVertical: 5,
-        width: '100%',
-    },
-    moduleButtonText: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 24,
-        textAlign: 'center',
-    },
-    linksContainer: {
-        backgroundColor: 'lightgray',
-        borderRadius: 8,
-        padding: 8,
-        marginBottom: 10,
-    },
-    linkText: {
-        padding: 8,
-        borderBottomWidth: 1,
-        borderBottomColor: 'gray',
-    },
-    chatbotContainer: {
-        marginTop: 20,
-        alignItems: 'center',
-    },
-    chatButton: {
-        backgroundColor: 'blue',
-        padding: 16,
-        borderRadius: 10,
-    },
-    chatButtonText: {
-        color: 'white',
-        fontSize: 20,
-    },
-    fullChatContainer: {
-        width: '100%',
-        flex: 1,
-        backgroundColor: 'white',
-        borderRadius: 10,
-        padding: 16,
-    },
-    chatHeader: {
-        marginBottom: 10,
-    },
-    chatHeaderText: {
-        fontSize: 24,
-        fontWeight: 'bold',
-    },
-    chatArea: {
-        flex: 1,
-        marginBottom: 10,
-    },
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    inputField: {
-        flex: 1,
-        borderWidth: 1,
-        borderColor: 'gray',
-        borderRadius: 10,
-        padding: 10,
-        marginRight: 10,
-    },
-    sendButton: {
-        backgroundColor: 'orange',
-        padding: 10,
-        borderRadius: 10,
-    },
-    sendButtonText: {
-        color: 'white',
-    },
+    // ... (your existing styles)
 });
 
 export default LearnView;

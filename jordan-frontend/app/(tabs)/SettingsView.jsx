@@ -7,28 +7,32 @@ const SettingsView = () => {
     const [userPassword, setUserPassword] = useState('password123'); // Use a more secure way to handle passwords in production
 
     const saveChanges = () => {
+        // Input validation
+        if (!userEmail.includes('@')) {
+            Alert.alert("Invalid Email", "Please enter a valid email address.");
+            return;
+        }
+        if (userPassword.length < 6) {
+            Alert.alert("Weak Password", "Password must be at least 6 characters long.");
+            return;
+        }
+
         // Here you would typically save the changes to your backend or user defaults
         Alert.alert("Settings Saved", "Your settings have been saved successfully.");
     };
 
     return (
         <ScrollView style={styles.container}>
-            {/* Orange strip at the top */}
             <View style={styles.header}>
                 <Text style={styles.headerText}>Settings</Text>
             </View>
 
             <View style={styles.section}>
-                {/* User Information Header */}
                 {headerView("User Information")}
 
-                {/* User Name Field */}
                 {textFieldView("Name", userName, setUserName)}
-
-                {/* User Email Field */}
                 {textFieldView("Email", userEmail, setUserEmail, 'email-address')}
 
-                {/* User Password Field */}
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>Password</Text>
                     <TextInput
@@ -36,10 +40,10 @@ const SettingsView = () => {
                         value={userPassword}
                         onChangeText={setUserPassword}
                         secureTextEntry={true}
+                        accessibilityLabel="Password Input"
                     />
                 </View>
 
-                {/* Save Changes Button */}
                 <TouchableOpacity style={styles.button} onPress={saveChanges}>
                     <Text style={styles.buttonText}>Save Changes</Text>
                 </TouchableOpacity>
@@ -64,6 +68,7 @@ const textFieldView = (title, value, setValue, keyboardType = 'default') => (
             value={value}
             onChangeText={setValue}
             keyboardType={keyboardType}
+            accessibilityLabel={`${title} Input`}
         />
     </View>
 );
@@ -90,8 +95,8 @@ const styles = StyleSheet.create({
         padding: 16,
         backgroundColor: 'lightgray',
         borderRadius: 10,
-        elevation: 1, // For Android shadow
-        shadowColor: '#000', // For iOS shadow
+        elevation: 1,
+        shadowColor: '#000',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.1,
         shadowRadius: 1,

@@ -1,31 +1,37 @@
-// app/_layout.tsx
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
+import { useEffect } from 'react';
+import 'react-native-reanimated';
 
-import React, { useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View } from 'react-native';
-import CustomTabBar from '../components/pages/CustomTabBar'; // Adjust the path as necessary
-import LearnView from './LearnView'; // Import your LearnView component
-import HomeView from './HomeView'; // Import your HomeView component (if you have it)
+import { useColorScheme } from '@/hooks/useColorScheme';
 
-const Stack = createNativeStackNavigator();
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
 
-const Layout = () => {
-  const [selectedTab, setSelectedTab] = useState(2); // Default to Home tab (index 2)
+export default function RootLayout() {
+  const colorScheme = useColorScheme();
+  const [loaded] = useFonts({
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+  });
+
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
+
+  if (!loaded) {
+    return null;
+  }
 
   return (
-    <NavigationContainer>
-      <View style={{ flex: 1 }}>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Home" component={HomeView} /> {/* Your home view */}
-          <Stack.Screen name="Learn" component={LearnView} /> {/* Your learn view */}
-          {/* Add more screens here as needed */}
-        </Stack.Navigator>
-
-        <CustomTabBar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-      </View>
-    </NavigationContainer>
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="+not-found" />
+      </Stack>
+    </ThemeProvider>
   );
-};
-
-export default Layout;
+}

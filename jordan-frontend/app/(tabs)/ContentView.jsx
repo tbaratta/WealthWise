@@ -7,7 +7,6 @@ import LearnView from './LearnView';
 import MoreView from './MoreView';
 import CustomTabBar from './CustomTabBar';
 
-
 const ContentView = () => {
   const [selectedTab, setSelectedTab] = useState(2); // Default to Home
 
