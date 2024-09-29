@@ -10,7 +10,6 @@ const db = new sqlite3.Database('./wealthwise.db', sqlite3.OPEN_READWRITE | sqli
 const getSettings = (req, res) => {
     try{
         const id = req.params.id;
-        console.log(id);
         db.get(`SELECT name, email, password FROM Users WHERE id = ?` , [id], (err, row) => {
             if (err) { 
                 console.error(err.message);

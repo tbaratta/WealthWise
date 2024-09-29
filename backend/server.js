@@ -11,6 +11,7 @@ const analyticsRouter = require('./routes/analytics');
 const learningRouter = require('./routes/learning');
 const dataManagementRouter = require('./routes/data-management');
 const settingsRouter = require('./routes/settings'); 
+const moreRouter = require('./routes/more');
 
 // Middleware
 app.use(cors());
@@ -22,6 +23,7 @@ app.use('/analytics', analyticsRouter);
 app.use('/learning', learningRouter);
 app.use('/data-management', dataManagementRouter);
 app.use('/settings', settingsRouter);
+app.use('/more', moreRouter);
 
 // Start the server
 app.listen(port, () => {
