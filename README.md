@@ -33,6 +33,8 @@ Before you begin, make sure to install the following:
 - [Git](https://git-scm.com/)
 - [Node.js](https://nodejs.org/en)
 - [npm](https://www.npmjs.com/)
+- [Expo](https://docs.expo.dev/more/expo-cli/)
+- [React Native](https://reactnative.dev/docs/environment-setup)
 
 ### Installation <a name="installation"></a>
 
