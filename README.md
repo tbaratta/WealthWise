@@ -47,7 +47,7 @@ Before you begin, make sure to install the following:
 1. Clone the repository:
 
     ```bash
-    [git clone https://github.com/tbaratta/AI_Summarizer.git](https://github.com/tbaratta/WealthWise_AI.git)
+    https://github.com/tbaratta/WealthWise_AI.git
     ```
 
 2. Navigate to the project directory:
