@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Switch, StyleSheet, ScrollView, Alert } from 'react-native';
+import axios from 'axios';
+const frontendIp = '10.0.2.2:3000';
+const userId = '1';
 
 const MoreView = () => {
     const [fraudDetectionEnabled, setFraudDetectionEnabled] = useState(false);
     const [developerToolsVisible, setDeveloperToolsVisible] = useState(false);
+    const [latestTransaction, setLatestTransaction] = useState({ amount: null, category: null });
+
+    // Fetch the latest transaction when the component mounts
+    useEffect(() => {
+        fetchLatestTransaction();
+    }, []);
 
     const toggleFraudDetection = () => {
         const newValue = !fraudDetectionEnabled;
@@ -13,6 +22,29 @@ const MoreView = () => {
 
     const toggleDeveloperTools = () => {
         setDeveloperToolsVisible(previousState => !previousState);
+    };
+
+    // Fetch the latest transaction from the backend
+    const fetchLatestTransaction = async () => {
+        try {
+            const response = await axios.get(`http://${frontendIp}/more`); // Frontend URL
+            setLatestTransaction(response.data);
+        } catch (error) {
+            console.error('Error fetching latest transaction:', error);
+            Alert.alert('Error', 'Failed to fetch latest transaction');
+        }
+    };
+
+    // Post a fake transaction to the backend
+    const postFakeTransaction = async () => {
+        try {
+            await axios.post(`http://${frontendIp}/more/${userId}`); // Frontend URL
+            fetchLatestTransaction(); // Refresh the latest transaction after posting
+            Alert.alert('Success', 'Fake transaction added successfully');
+        } catch (error) {
+            console.error('Error posting fake transaction:', error);
+            Alert.alert('Error', 'Failed to add fake transaction');
+        }
     };
 
     return (
@@ -31,6 +63,15 @@ const MoreView = () => {
                         accessibilityLabel="Enable Fraud Detection Switch"
                     />
                 </View>
+            </View>
+
+            <View style={styles.section}>
+                {headerView("Latest Transaction")}
+                <Text>Amount: {latestTransaction.amount !== null ? `$${latestTransaction.amount}` : "Loading..."}</Text>
+                <Text>Category: {latestTransaction.category || "Loading..."}</Text>
+                <TouchableOpacity style={styles.button} onPress={postFakeTransaction} accessibilityLabel="Post Fake Transaction">
+                    <Text style={styles.buttonText}>Add Fake Transaction</Text>
+                </TouchableOpacity>
             </View>
 
             <View style={styles.section}>

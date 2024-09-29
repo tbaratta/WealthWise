@@ -1,5 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, ScrollView, TextInput, Button } from 'react-native';
+import axios from 'axios';
+
+// Constants for API
+const API_URL = 'http://10.0.2.2:3000/home/chatbot'; // Replace with your backend IP
 
 const HomeView = () => {
   const [isChatExpanded, setIsChatExpanded] = useState(false);
@@ -30,15 +34,37 @@ const HomeView = () => {
     return () => bounce.stop();
   }, [bounceAnimation]);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (inputValue.trim()) {
       // Add user message
-      setMessages((prevMessages) => [...prevMessages, { text: inputValue, sender: 'User' }]);
+      const userMessage = inputValue;
+      setMessages((prevMessages) => [...prevMessages, { text: userMessage, sender: 'User' }]);
       setInputValue(''); // Clear input
-      // Mock response from AI
-      setMessages((prevMessages) => [...prevMessages, { text: "Here's a tip on saving...", sender: 'WealthWise AI' }]);
+
+      try {
+        // Make API call to the backend
+        const response = await axios.post(API_URL, {
+          stockSymbol: 'null', // Example stock symbol, replace as needed
+          userMessage: userMessage,
+        });
+
+        console.log("Response from server:", response.data); // Log the full response
+
+        // Check if advice is an object and extract the relevant text
+        const advice = response.data.advice.result; // Assuming 'result' is the key you want to display
+        if (advice) {
+          // Add AI response to the chat
+          setMessages((prevMessages) => [...prevMessages, { text: advice, sender: 'WealthWise AI' }]);
+        } else {
+          setMessages((prevMessages) => [...prevMessages, { text: 'No advice received from server.', sender: 'WealthWise AI' }]);
+        }
+      } catch (error) {
+        console.error('Error sending message:', error);
+        setMessages((prevMessages) => [...prevMessages, { text: 'Error getting advice. Please try again.', sender: 'WealthWise AI' }]);
+      }
     }
   };
+
 
   const ChatBox = () => (
     <TouchableOpacity style={styles.chatBox} onPress={() => setIsChatExpanded(true)}>
@@ -98,111 +124,81 @@ const HomeView = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'orange',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    padding: 20,
   },
   hero: {
+    marginBottom: 20,
     alignItems: 'center',
-    marginBottom: 20, // Space between hero section and chat box
-    padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
-    elevation: 5,
   },
   aiHeader: {
     fontSize: 24,
     fontWeight: 'bold',
-    textAlign: 'center',
   },
   aiSubHeader: {
     fontSize: 16,
-    textAlign: 'center',
     color: '#666',
   },
   chatBox: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 10,
     alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 20,
   },
   chatBubble: {
-    padding: 15,
-    backgroundColor: 'white',
-    borderRadius: 20, // Rounded corners for the white box
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
-    elevation: 5,
+    backgroundColor: '#e1e1e1',
+    borderRadius: 15,
+    padding: 10,
   },
   chatEmoji: {
-    fontSize: 50,
+    fontSize: 30,
   },
   chatText: {
-    fontSize: 12,
-    color: 'white',
-    marginTop: 10,
-    textAlign: 'center', // Center text under the emoji
-  },
-  fullScreenOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginTop: 5,
+    fontSize: 14,
   },
   fullScreenChatView: {
-    width: '90%',
-    height: '70%',
-    backgroundColor: 'white',
+    flex: 1,
+    backgroundColor: '#fff',
     borderRadius: 10,
     padding: 20,
-    justifyContent: 'flex-end', // Aligns the input area at the bottom
   },
   chatMessages: {
     flex: 1,
+    marginBottom: 10,
   },
   noMessagesText: {
     textAlign: 'center',
-    marginVertical: 20,
-    color: '#999',
+    fontStyle: 'italic',
   },
   messageInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
-    paddingVertical: 10,
   },
   messageInput: {
     flex: 1,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
     padding: 10,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 10,
     marginRight: 10,
   },
   userMessage: {
     alignSelf: 'flex-end',
-    backgroundColor: '#d1ffd1',
-    padding: 10,
+    backgroundColor: '#a0e1a0',
     borderRadius: 5,
+    padding: 5,
     marginVertical: 2,
   },
   aiMessage: {
     alignSelf: 'flex-start',
-    backgroundColor: '#f0f0f0',
-    padding: 10,
+    backgroundColor: '#e1e1e1',
     borderRadius: 5,
+    padding: 5,
     marginVertical: 2,
+  },
+  fullScreenOverlay: {
+    flex: 1,
   },
 });
 

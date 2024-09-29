@@ -1,4 +1,5 @@
 const sqlite3 = require('sqlite3').verbose();
+const axios = require('axios');
 
 // Open the database connection
 const db = new sqlite3.Database('./wealthwise.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
