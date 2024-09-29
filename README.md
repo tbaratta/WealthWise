@@ -13,10 +13,10 @@
 This mobile application leverages AI through the OpenAI API and Yahoo Finance API to deliver a personal financial advisor via an AI chatbot, helping clients manage their finances effectively. Additionally, it features a pie chart visualization for tracking monthly budgets based on user expenses and income, along with educational resources to enhance financial literacy.
 
 ## 🤝 Team <a name="team"></a>
-- [Thomas Baratta](https://www.linkedin.com/in/thomas-baratta-228244290/){:target="_blank"}
-- [Jordan Robertson](https://www.linkedin.com/in/jordan-ty-robertson/){:target="_blank"}
-- [Allison Brown](https://www.linkedin.com/in/allison-brown-16a8b6293/){:target="_blank"}
-- [Deividas Ilgunas](https://www.linkedin.com/in/dilgunas2003/){:target="_blank"}
+- [Thomas Baratta](https://www.linkedin.com/in/thomas-baratta-228244290/) 
+- [Jordan Robertson](https://www.linkedin.com/in/jordan-ty-robertson/) 
+- [Allison Brown](https://www.linkedin.com/in/allison-brown-16a8b6293/) 
+- [Deividas Ilgunas](https://www.linkedin.com/in/dilgunas2003/) 
 
 ## ⚙️ Tech Stack <a name="tech-stack"></a>
 
@@ -32,7 +32,7 @@ This mobile application leverages AI through the OpenAI API and Yahoo Finance AP
   
 ## 🛠️ Features <a name="features"></a>
 
-- **Modern User Interface:** A visually appealing and fully functional user interface designed.
+- **Modern User Interface:** Fully functional and interactive user interface.
 - **AI Chatbot:** Leverages AI to provide personalized advice through an interactive chatbox.
 - **Budget Visualization:** Integrates a pie chart and line graph that visually represents a users' monthly budget.
 - **Expense Tracking:** Automatically tracks expenses and income to provide better financial management.
