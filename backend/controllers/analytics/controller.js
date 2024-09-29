@@ -7,10 +7,6 @@ const db = new sqlite3.Database('./wealthwise.db', sqlite3.OPEN_READWRITE | sqli
      }
 });
 
-
-
-
-
 // Controller to get analytics data for a user
 const getAnalytics = (req, res) => {
      try {
