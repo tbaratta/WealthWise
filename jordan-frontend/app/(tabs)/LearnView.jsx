@@ -23,7 +23,7 @@ const LearnView = () => {
     };
 
     const moduleView = (title) => (
-        <View>
+        <View style={styles.moduleContainer}>
             <TouchableOpacity style={styles.moduleButton} onPress={() => {
                 setSelectedModule(selectedModule === title ? null : title);
             }}>
@@ -70,7 +70,7 @@ const LearnView = () => {
             </View>
             <ScrollView style={styles.chatArea}>
                 {messages.map((msg, index) => (
-                    <Text key={index} style={{ alignSelf: msg.user === "User" ? 'flex-end' : 'flex-start' }}>
+                    <Text key={index} style={[styles.messageText, { alignSelf: msg.user === "User" ? 'flex-end' : 'flex-start' }]}>
                         {msg.user}: {msg.text}
                     </Text>
                 ))}
@@ -107,9 +107,132 @@ const LearnView = () => {
     );
 };
 
-// Styles remain unchanged
+// Styles
 const styles = StyleSheet.create({
-    // ... (your existing styles)
+    container: {
+        flex: 1,
+        backgroundColor: '#f5f5f5',
+        padding: 20,
+    },
+    header: {
+        backgroundColor: '#6200ee',
+        padding: 15,
+        borderRadius: 8,
+        marginBottom: 15,
+    },
+    headerText: {
+        color: '#ffffff',
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    scrollContainer: {
+        paddingBottom: 20,
+    },
+    moduleContainer: {
+        marginBottom: 10,
+        borderRadius: 8,
+        overflow: 'hidden',
+        backgroundColor: '#ffffff',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 2,
+    },
+    moduleButton: {
+        padding: 15,
+        backgroundColor: '#6200ee',
+    },
+    moduleButtonText: {
+        color: '#ffffff',
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    linksContainer: {
+        padding: 10,
+        backgroundColor: '#e1bee7',
+    },
+    linkText: {
+        fontSize: 16,
+        color: '#333',
+        marginVertical: 5,
+    },
+    chatbotContainer: {
+        marginTop: 20,
+        marginBottom: 10,
+        alignItems: 'center',
+    },
+    chatButton: {
+        padding: 10,
+        backgroundColor: '#6200ee',
+        borderRadius: 8,
+        alignItems: 'center',
+    },
+    chatButtonText: {
+        color: '#ffffff',
+        fontSize: 18,
+    },
+    fullChatContainer: {
+        borderWidth: 1,
+        borderColor: '#6200ee',
+        borderRadius: 8,
+        overflow: 'hidden',
+        backgroundColor: '#ffffff',
+        width: '100%',
+        height: '50%',
+        justifyContent: 'space-between',
+    },
+    chatHeader: {
+        backgroundColor: '#6200ee',
+        padding: 10,
+    },
+    chatHeaderText: {
+        color: '#ffffff',
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    chatArea: {
+        flex: 1,
+        padding: 10,
+    },
+    messageText: {
+        padding: 5,
+        marginVertical: 2,
+        borderRadius: 5,
+        backgroundColor: '#f1f1f1',
+        maxWidth: '80%',
+    },
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 5,
+        borderTopWidth: 1,
+        borderTopColor: '#ccc',
+    },
+    inputField: {
+        flex: 1,
+        padding: 10,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        backgroundColor: '#ffffff',
+        marginRight: 5,
+    },
+    sendButton: {
+        backgroundColor: '#6200ee',
+        borderRadius: 5,
+        padding: 10,
+    },
+    sendButtonText: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+    },
 });
 
 export default LearnView;

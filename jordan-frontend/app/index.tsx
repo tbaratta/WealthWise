@@ -28,16 +28,6 @@ const App = () => {
     <NavigationContainer independent={true}>
       <Tab.Navigator>
         <Tab.Screen
-          name="Home"
-          component={MainStackNavigator}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="home-outline" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
           name="Settings"
           component={SettingsScreen}
           options={{
@@ -52,6 +42,16 @@ const App = () => {
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="bar-chart-outline" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Home"
+          component={MainStackNavigator}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="home-outline" color={color} size={size} />
             ),
           }}
         />
