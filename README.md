@@ -14,6 +14,7 @@ This mobile application leverages AI through the OpenAI API and Yahoo Finance AP
 ## ⚙️ Tech Stack <a name="tech-stack"></a>
 
 - React Native
+- Expo
 - Node.js
 
 ## 🛠️ Features <a name="features"></a>
