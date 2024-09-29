@@ -28,7 +28,7 @@ const AnalyticsView = () => {
 
      useEffect(() => {
           fetchData(); // Initial fetch
-          const intervalId = setInterval(fetchData, 10000); // Fetch updated data every 10 seconds
+          const intervalId = setInterval(fetchData, 1000); // Fetch updated data every 10 seconds
           return () => clearInterval(intervalId); // Cleanup the interval
      }, []);
 
