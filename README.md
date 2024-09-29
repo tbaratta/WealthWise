@@ -38,40 +38,44 @@ Before you begin, make sure to install the following:
 
 - [Git](https://git-scm.com/)
 - [Node.js](https://nodejs.org/en)
-- [npm](https://www.npmjs.com/)
-- [Expo](https://docs.expo.dev/more/expo-cli/)
-- [React Native](https://reactnative.dev/docs/environment-setup)
+- [npm](https://www.npmjs.com/) (Node Package Manager)
 
 ### Installation <a name="installation"></a>
 
 1. Clone the repository:
 
     ```bash
-    https://github.com/tbaratta/WealthWise_AI.git
+    git clone https://github.com/tbaratta/WealthWise_AI.git
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd AI_Summarizer
+    cd WealthWise_AI
     ```
 
-3. Install npm:
+3. Install project dependecies using npm:
    ```bash
     npm install
     ```
-4. Install Expo:
+
+4. Create a new file named .env in the root of your project and add the following:
    ```bash
-    npm install expo
+    API_KEY=
     ```
+   Visit [Rapid API Website](https://rapidapi.com/rphrp1985/api/yahoo-finance160) to replace the placeholder value with a new api key.
+   
 5. Load the emulator:
    ```bash
     npx expo start
+     i - ios
+     a - android
+     w - web
     ```
-6. Click Expo Go app
    
    ## 🤝🏻 References <a name="references"></a>
 
    - [JavaScriptMastery](https://www.youtube.com/@javascriptmastery)
+   - 
      
    
