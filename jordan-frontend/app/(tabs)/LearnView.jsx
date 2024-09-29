@@ -167,12 +167,13 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     moduleButton: {
-        backgroundColor: '#007BFF',
+        backgroundColor: '#ff4500',
         padding: 16,
         borderRadius: 8,
     },
     moduleButtonText: {
         color: '#FFFFFF',
+        alignSelf: 'center',
         fontSize: 18,
     },
     linksContainer: {
