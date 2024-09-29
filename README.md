@@ -1,3 +1,4 @@
+# 🐚 Shell Hacks 2024
 # 💲 WealthWise AI
 
 ## 🗒️ Table of Contents
