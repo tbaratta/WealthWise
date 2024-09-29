@@ -13,7 +13,7 @@ This mobile application leverages AI through the OpenAI API and Yahoo Finance AP
 
 ## 🤝 Team <a name="team"></a>
 - [Thomas Baratta](https://www.linkedin.com/in/thomas-baratta-228244290/) (Backend)
-- [Jordan Robertson](https://www.linkedin.com/in/jordan-ty-robertson/) (FullStack)
+- [Jordan Robertson](https://www.linkedin.com/in/jordan-ty-robertson/) (Fullstack)
 - [Allison Brown](https://www.linkedin.com/in/allison-brown-16a8b6293/) (Frontend)
 - [Deividas Ilgunas](https://www.linkedin.com/in/dilgunas2003/) (Backend)
 
