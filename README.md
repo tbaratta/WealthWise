@@ -2,9 +2,9 @@
 # 💲 WealthWise AI
 
 <div style="display: flex; justify-content: space-around;">
-  <img src="images/home.png" alt="Home" width="600" height="320">
+  <img src="images/home.png" alt="Home" width="400" height="320">
   <img src="images/chatbot.png" alt="Chatbot" width="750" height="320">
-  <img src="images/analytics.png" alt="Analytics" width="600" height="320">
+  <img src="images/analytics.png" alt="Analytics" width="400" height="320">
 </div>
 
 ## 🗒️ Table of Contents
