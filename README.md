@@ -33,7 +33,8 @@ This mobile application leverages AI through the OpenAI API and Yahoo Finance AP
 - Node.js
 - Express.js
 - React.js
-- Sqlite
+- SQLite3
+- Git
   
   
 ## 🛠️ Features <a name="features"></a>
