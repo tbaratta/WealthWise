@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { PieChart } from 'react-native-chart-kit'; // Import PieChart
 
-const backendUrl = 'http://10.0.2.2:3000'; // Replace with your actual local server IP
+const backendUrl = 'http://localhost:3000'; // Replace with you IP or localhost
 const userId = '1'; // Replace with the actual user ID
 
 const AnalyticsView = () => {

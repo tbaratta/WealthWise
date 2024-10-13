@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, TextInput } from 'react-native';
 import axios from 'axios';
 
-const frontendIp = '10.0.2.2:3000'; // Use the correct IP address for your backend
+const frontendIp = 'localhost:3000'; // Use the correct IP address for your backend
 const stock = 'null';
 const LearnView = () => {
     const [selectedModule, setSelectedModule] = useState(null);
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     moduleButton: {
-        backgroundColor: '#ff4500',
+        backgroundColor: 'green',
         padding: 16,
         borderRadius: 8,
     },
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
         marginTop: 16,
     },
     chatButton: {
-        backgroundColor: '#28A745',
+        backgroundColor: '#ff4500',
         padding: 12,
         borderRadius: 8,
         alignItems: 'center',
